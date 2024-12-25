@@ -1,0 +1,51 @@
+plugins {
+//  id 'org.asciidoctor.base' version '4.0.4'
+  id 'org.asciidoctor.jvm.pdf' version '4.0.4'
+  id 'org.asciidoctor.jvm.gems' version '4.0.4'
+}
+
+repositories {
+  ruby {
+    gems()
+  }
+  mavenCentral()
+}
+
+apply plugin: 'java'
+//apply plugin: "org.asciidoctor.base"
+apply plugin: 'org.asciidoctor.jvm.pdf'
+apply plugin: 'org.asciidoctor.jvm.gems'
+
+dependencies {
+  asciidoctorGems "rubygems:rouge:4.5.1"
+}
+
+version = '1.0.0-SNAPSHOT'
+
+asciidoctorPdf {
+  dependsOn asciidoctorGemsPrepare
+
+  baseDirFollowsSourceFile()
+
+  asciidoctorj {
+    version = "3.0.0"
+    logLevel = 'DEBUG'
+    safeMode = 'unsafe'
+
+    requires 'rouge'
+    attributes 'build-gradle': file('build.gradle'),
+        'sourcedir': project.sourceSets.main.java.srcDirs[0],
+        'endpoint-url': 'http://example.org',
+        'source-highlighter': 'rouge',
+        'imagesdir': './images',
+        'toc': 'left',
+        'icons': 'font',
+        'idprefix': '',
+        'idseparator': '-',
+        'pdf-themesdir': 'theme',
+        'pdf-theme': 'base'
+  }
+}
+
+// alias
+task asciidoctor(dependsOn: asciidoctorPdf)
