@@ -1,4 +1,4 @@
-= PDF Example
+= PDF example to reproduce the error of the not found PDF theme file
 
 An example project that demonstrates how to convert AsciiDoc to PDF using the Asciidoctor Gradle plugin.
 
@@ -9,3 +9,11 @@ Convert the AsciiDoc to PDF by invoking the 'asciidoctor' goal:
  $ ./gradlew asciidoctor
 
 Open the file _build/docs/asciidocPdf/example-manual.pdf_ in your browser to see the generated PDF file.
+
+[source,options="nowrap"]
+.Errormessage
+----
+> Task :asciidoctorPdf
+could not locate or load the pdf theme `base in theme because of Errno::ENOENT No such file or directory - /home/lwolter/dev/test/asciidoc-to-pdf-theme_not_found/theme/base-theme.yml; reverting to default theme
+could not locate or load the pdf theme `base' in theme because of Errno::ENOENT No such file or directory - /home/lwolter/dev/test/asciidoc-to-pdf-theme_not_found/theme/base-theme.yml; reverting to default theme (uri:classloader:/gems/asciidoctor-pdf-2.3.10/lib/asciidoctor/pdf/converter.rb:load_theme)
+----
